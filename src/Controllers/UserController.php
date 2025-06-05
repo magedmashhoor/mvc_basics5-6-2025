@@ -2,14 +2,16 @@
 namespace App\Controllers;
 
 use App\Models\Users;
-use Core\Model;
 use Core\View\View;
 use Core\Requests;
 
-class UserController extends Model
+class UserController
 {
+    protected $userModel;
+
     public function __construct()
     {
+        $this->userModel = new Users();
     }
 
     public function index(Requests $request)
@@ -19,8 +21,7 @@ class UserController extends Model
 
     public function list()
     {
-        $user = new Users();
-        $userData = $user->GetDoctorInfo();
+        $userData = $this->userModel->GetDoctorInfo();
         View::render("home", ['users' => $userData]);
     }
 
@@ -32,10 +33,9 @@ class UserController extends Model
     public function insert(Requests $request)
     {
         $data = $request->all();
-        $user = new Users();
         
         try {
-            if ($user->insert($data)) {
+            if ($this->userModel->insert($data)) {
                 View::render("insert", [
                     'success' => 'Doctor added successfully!',
                     'formData' => $data
