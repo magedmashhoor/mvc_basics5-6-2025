@@ -49,12 +49,6 @@ class UserController extends Model
          *   3. Return response
          */
         print_r($request->all());
-        
-        // Typically you would:
-        // 1. Get data from model
-        // $users = (new Users())->getAll();
-        // 2. Render view
-        // View::render('users/index', ['users' => $users]);
     }
 
     /**
@@ -78,14 +72,43 @@ class UserController extends Model
          * Parameters:
          * 1. View template name (matches src/Views/home.php)
          * 2. Data array to expose to view
-         * 
-         * View will receive $users variable containing:
-         * [
-         *    ['Name' => 'Nagd Ali Abdu', ...],
-         *    ['Name' => 'Salem', ...],
-         *    ...
-         * ]
          */
         View::render("home", ['users' => $userData]);
+    }
+
+    /**
+     * Show the add doctor form
+     */
+    public function showAddForm()
+    {
+        View::render("insert", ['formData' => []]);
+    }
+
+    /**
+     * Handle the form submission
+     */
+    public function insert(Requests $request)
+    {
+        $data = $request->all();
+        $user = new Users();
+        
+        try {
+            if ($user->insert($data)) {
+                View::render("insert", [
+                    'success' => 'Doctor added successfully!',
+                    'formData' => $data
+                ]);
+            } else {
+                View::render("insert", [
+                    'error' => 'Failed to add doctor',
+                    'formData' => $data
+                ]);
+            }
+        } catch (\Exception $e) {
+            View::render("insert", [
+                'error' => 'An error occurred: ' . $e->getMessage(),
+                'formData' => $data
+            ]);
+        }
     }
 }

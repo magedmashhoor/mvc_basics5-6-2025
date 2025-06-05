@@ -35,10 +35,8 @@ $routes = match($path) {
     // /user/list -> UserController's list method
     "/user/list"  => ["UserController" => "list"],
     
-    "/doctor/add" => ["UserController" => "showInsertForm"],
+    "/doctor/add" => ["UserController" => "showAddForm"],
     "/doctor/insert" => ["UserController" => "insert"],
-    //"/doctor/delete" => ["UserController" => "showInsertForm"],
-   // "/doctor/delete" => ["UserController" => "delete"],
     
     // No match -> null triggers 404
     default       => null, 
