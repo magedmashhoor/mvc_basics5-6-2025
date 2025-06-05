@@ -11,5 +11,6 @@ return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Core\\App' => $baseDir . '/core/App.php',
     'Core\\Database\\DB' => $baseDir . '/core/Database/DB.php',
+    'Core\\Requests' => $baseDir . '/core/Requests.php',
     'Core\\View\\View' => $baseDir . '/core/View/View.php',
 );
